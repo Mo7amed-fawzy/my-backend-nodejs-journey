@@ -2,7 +2,7 @@ const http = require('http');
 
 // إنشاء السيرفر
 const myServer = http.createServer((req, response) => {
-    const url = req.url;
+    const url = req.url;// دا اوبجكت بطلع منه اليو ار ال
 
     if (url === '/') {
         response.write('<h1>am backend</h1>');

@@ -1,26 +1,36 @@
-const myFunctions = require('./index'); // دا كدا شبه الاوبجكت من موديول (ملف) ودا ال CommonJS
+//npm init // لما اجي اعمل باكدج
+//npm i express --save دي هتخلي الباكدج تضاف فمرحلة الديفيلوبمت و الديبلويمنت وحتي لو مكتبتش سيف هيعتبرها نفسها
+//npm i express --save -dev دي هتخلي الباكدج تضاف فمرحلة الديفيلوبمت و الديبلويمنت
+// باكدج اسمها nodemone علشان اخلي السيرفر شغال علطول npx nodemon app.js 
 
-myFunctions.printMyName();
-myFunctions.printMyAddress();
-myFunctions.printMyAge();
+const express = require('express'); //كدا عملت فنكشن او اوبجكت حطيت فيه خصائص الفريموورك
+const app = express();
 
-// import { printMyName, printMyAddress, printMyAge } from './index'; // ES Modules
+//  بتاع الباك بيعمل group of links enables u to interact with db 
 
-// printMyName();
-// printMyAddress();
-// printMyAge();
-// الاكواد دي شغاله مع الcommonJS بس
-console.log('file name is ' + __filename); // بيطبعلي الباث مع اسم الفايل 
-console.log('file name is ' + __dirname); // بيطبعلي الباث منغير اسم الفايل 
+// MiddleWare هو فنكشن بتتفنز مع كل ريكويست ونيكست دي بقولو روح علي المطلوب البعده
+// app.use('/product', (req, response, next) => {
+//     console.log('middle ware was called');
+//     next();
+// });
 
-const fileSystem = require('fs');
 
-fileSystem.writeFile('myFile.txt', 'my name is ahmed , i livee in egypt , iam a computer science student', () => { console.log('file created succesfully') });
-// writeFile دي ميثود فيها 3 باراميترز الاول اسم الملف التاني الكتابة الجواه التالت فنكشن كوللباك وليكن اروو فنكشن بعرف بيها ان العمليه تمت بنجاح
-fileSystem.readFile('myFile.txt', 'utf-8', (error, data) => {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(data);
-    }
+app.get('/product', (req, response) => {
+    // response.send('<h1>hello from home</h1>'); // دا ويب
+    response.status(200).json({
+        "name": "ahmed el sabahy",
+        "age": 21,
+        "country": "cairo",
+    }); // دا شبه الماب
 });
+app.get('/user', (req, response) => {
+    // response.send('<h1>hello from home</h1>'); // دا ويب
+    response.status(200).json({
+        "name": "mohamed",
+        "age": 21,
+        "country": "sohag",
+    }); // دا شبه الماب
+});
+app.listen(8080, () => {
+    console.log('server is running on port 8080 using express');
+})

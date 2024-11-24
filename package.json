@@ -1,0 +1,26 @@
+{
+  "name": "node_crash_course",
+  "version": "1.0.0",
+  "description": "my first api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"npx nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mo7amed-fawzy/my-backend-nodejs-journey.git"
+  },
+  "author": "mohamed fawzy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mo7amed-fawzy/my-backend-nodejs-journey/issues"
+  },
+  "homepage": "https://github.com/Mo7amed-fawzy/my-backend-nodejs-journey#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
