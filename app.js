@@ -3,6 +3,7 @@
 //npm i express --save -dev دي هتخلي الباكدج تضاف فمرحلة الديفيلوبمت و الديبلويمنت
 // باكدج اسمها nodemone علشان اخلي السيرفر شغال علطول npx nodemon app.js 
 //npm i mongoose for install and for apdate npm install mongoose@latest
+//npm i cors لحل مشكلة الهوست(الدوماين) المن بلد مختلفه (add headers)
 
 
 const express = require('express'); //كدا عملت فنكشن او اوبجكت حطيت فيه خصائص الفريموورك
@@ -10,6 +11,7 @@ const expressOBJ = express();
 const objrouter = require('./routes/product');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const uri = 'mongodb+srv://mohamed:wbalYaBKMm2iqvku@cluster0.i0vlj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
