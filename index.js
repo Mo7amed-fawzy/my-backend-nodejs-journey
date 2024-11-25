@@ -13,6 +13,10 @@ const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
+// allow access middle ware
+expressOBJ.use(cors());
+
 const uri = 'mongodb+srv://mohamed:wbalYaBKMm2iqvku@cluster0.i0vlj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 // علشان اربط بقاعدة البيانات محتاج اعمل فنكشن الكونكت
@@ -28,8 +32,8 @@ const connectDB = async () => {
 // بستدعي الفنشكن بتاعت الكونكت وبعمل فنكشن تشغيل السيرفر بعد نجاح عملية الكونكت
 const startServer = async () => {
     await connectDB(); // انتظار اتصال MongoDB قبل تشغيل السيرفر
-
-    expressOBJ.listen(8080, () => {
+    // process.env.port دي بتحتوي علي ال environment variables فانا عاوز منها ال port بحيث يكون داينامك وحطيت ديفولت 8080 فحالة كان ب null
+    expressOBJ.listen(process.env.PORT || 8080, () => {
         console.log('Server is running on port 8080 using express');
     });
 };
