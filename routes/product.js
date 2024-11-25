@@ -34,7 +34,7 @@ router.get('/:productId', async (req, response) => { // اسمهم البارا�
     }
 });
 // delet element
-router.delete('/:productId', async (req, response) => { // اسمهم البارامز :
+router.delete('/:productId', async (req, response) => {
     try {
         const product = await productModelOBJ.deleteOne({ "_id": req.params.productId });
         response.json(product);
@@ -43,14 +43,25 @@ router.delete('/:productId', async (req, response) => { // اسمهم البار
     }
 });
 // patch element
-router.patch('/:productId', async (req, response) => { // اسمهم البارامز :
+router.patch('/:productId', async (req, response) => {
     try {
-        const product = await productModelOBJ.updateOne({ "_id": req.params.productId }, { "title": req.body.title });
+        const updateFields = {
+            title: req.body.title,
+            desc: req.body.desc,
+            color: req.body.color
+        };
+
+        const product = await productModelOBJ.updateOne(
+            { "_id": req.params.productId }, // شرط التحديد باستخدام الـ ID
+            { $set: updateFields } // استخدم $set لتحديث الحقول
+        );
         response.json(product);
     } catch (err) {
         console.log(err);
+        response.status(500).json({ error: "An error occurred while updating the product." });
     }
 });
+
 // router.get('/user', (req, response) => {
 //     // response.send('<h1>hello from home</h1>'); // دا ويب
 //     response.status(200).json({
