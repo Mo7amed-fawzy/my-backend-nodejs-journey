@@ -33,6 +33,24 @@ router.get('/:productId', async (req, response) => { // اسمهم البارا�
         console.log(err);
     }
 });
+// delet element
+router.delete('/:productId', async (req, response) => { // اسمهم البارامز :
+    try {
+        const product = await productModelOBJ.deleteOne({ "_id": req.params.productId });
+        response.json(product);
+    } catch (err) {
+        console.log(err);
+    }
+});
+// patch element
+router.patch('/:productId', async (req, response) => { // اسمهم البارامز :
+    try {
+        const product = await productModelOBJ.updateOne({ "_id": req.params.productId }, { "title": req.body.title });
+        response.json(product);
+    } catch (err) {
+        console.log(err);
+    }
+});
 // router.get('/user', (req, response) => {
 //     // response.send('<h1>hello from home</h1>'); // دا ويب
 //     response.status(200).json({
@@ -43,17 +61,15 @@ router.get('/:productId', async (req, response) => { // اسمهم البارا�
 // });
 
 router.post('/', (req, res) => { // النت هتبعتو فالبودي هرجعهولك وارجعلك معاه رسالة
-    // const name = req.body.name;
-    // const price = req.body.price;
+    // res.status(201).json({
+    //     "message": "product created successfully",
+    //     "data": { "name": name, "price": price }
+    // });
     const product = new productModelOBJ({
         title: req.body.title,
         desc: req.body.desc,
         color: req.body.color,
     });
-    // res.status(201).json({
-    //     "message": "product created successfully",
-    //     "data": { "name": name, "price": price }
-    // });
     product.save().then((data) => {
         res.json({ "message": "product created successfully", "data": data });
     });
