@@ -4,6 +4,7 @@
 // باكدج اسمها nodemone علشان اخلي السيرفر شغال علطول npx nodemon app.js 
 //npm i mongoose for install and for apdate npm install mongoose@latest
 //npm i cors لحل مشكلة الهوست(الدوماين) المن بلد مختلفه (add headers)
+// npm install dotenv علشان اشغل ملف .env
 
 
 const express = require('express'); //كدا عملت فنكشن او اوبجكت حطيت فيه خصائص الفريموورك
@@ -12,17 +13,20 @@ const objrouter = require('./routes/product');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config(); // علشان استخدم متغير من ملف .env
 
-
+// const port = 8080 || process.env.PORT;
 // allow access middle ware
 expressOBJ.use(cors());
 
-const uri = DB_KEY;
+const uri = process.env.DB_KEY; // استخدام المتغير من ملف .env
+
 
 // علشان اربط بقاعدة البيانات محتاج اعمل فنكشن الكونكت
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.uri);
+        //process.env.
+        await mongoose.connect(uri);
         console.log('Connected to MongoDB successfully');
     } catch (err) {
         console.error('Failed to connect to MongoDB:', err);
@@ -33,9 +37,10 @@ const connectDB = async () => {
 const startServer = async () => {
     await connectDB(); // انتظار اتصال MongoDB قبل تشغيل السيرفر
     // process.env.port دي بتحتوي علي ال environment variables فانا عاوز منها ال port بحيث يكون داينامك وحطيت ديفولت 8080 فحالة كان ب null
-    expressOBJ.listen(process.env.PORT || 8080, () => {
+    expressOBJ.listen(8080, () => {
         console.log('Server is running on port 8080 using express');
     });
+    //process.env.PORT || 
 };
 
 startServer();
@@ -67,3 +72,6 @@ expressOBJ.use('/product', objrouter, (req, response, next) => {
 
 
 
+// "engines": {
+//     "node": "20.18.0"
+//   },

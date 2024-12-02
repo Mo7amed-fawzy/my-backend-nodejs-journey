@@ -5,17 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon app.js"
+    "start": "npx nodemon index.js"
   },
- 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mo7amed-fawzy/my-backend-nodejs-journey.git"
   },
   "author": "mohamed fawzy",
-  "engines": {
-    "node": "20.18.0"
-  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Mo7amed-fawzy/my-backend-nodejs-journey/issues"
@@ -24,6 +20,7 @@
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7"
