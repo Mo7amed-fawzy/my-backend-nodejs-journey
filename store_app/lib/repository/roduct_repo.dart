@@ -1,3 +1,5 @@
+import 'package:store_app/models/product.dart';
+
 abstract class ProductRepo {
   // بتحتوي علي abstract functions والهي ال fucntions ملهاش body
 
@@ -8,11 +10,11 @@ abstract class ProductRepo {
   Future<List<dynamic>>? getAllProducts();
 
   //post
-  Future<void> addProduct();
+  Future<void> addProduct(Product product);
 
   //patch
-  Future<void> updateProduct();
+  Future<void> updateProduct(String id, Product product);
 
   //delet
-  Future<void> deletProduct();
+  Future<void> deleteProduct(String id);
 }

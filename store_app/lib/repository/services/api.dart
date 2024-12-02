@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:store_app/models/product.dart';
 import 'package:store_app/repository/roduct_repo.dart';
 import 'package:store_app/utils/constants.dart';
 // aliasing اعادة تسمية (والفكره منها اني استعمل get بتاعت http او العمليات المن الباكدج)
@@ -10,18 +11,12 @@ import 'package:store_app/utils/constants.dart';
 //implements  فانا لو معايه مكس فنكشنز named و abstract function فكدا هستعمل
 class Api implements ProductRepo {
   @override
-  Future<void> addProduct() {}
-
-  @override
-  Future<void> deletProduct() {}
-
-  @override
-  Future<List<dynamic>> getAllProducts() async {
+  Future<List>? getAllProducts() async {
     try {
       // إرسال الطلب
       http.Response response = await http.get(Uri.parse(url));
       if (response.statusCode == success) {
-        List<dynamic> body = jsonDecode(response.body);
+        List<dynamic> body = jsonDecode(response.body); // String => object
         return body;
       } else {
         // في حالة وجود خطأ في حالة الاستجابة
@@ -37,5 +32,51 @@ class Api implements ProductRepo {
   }
 
   @override
-  Future<void> updateProduct() {}
+  Future<void> addProduct(Product product) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(product.toJson()), // object to string
+      );
+
+      if (response.statusCode == success) {
+        if (kDebugMode) print('Product added successfully');
+      } else {
+        throw Exception('Failed to add product: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (kDebugMode) print('Error adding product: $e');
+      throw Exception('Error adding product: $e');
+    }
+  }
+
+  @override
+  Future<void> updateProduct(String id, Product product) async {
+    try {
+      Uri uri = Uri.parse('$url/$id');
+      http.Response response = await http.patch(
+        uri,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(product.toJson()),
+      );
+
+      if (response.statusCode == success) {
+        if (kDebugMode) print('Product updated successfully');
+      } else {
+        throw Exception('Failed to update product: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (kDebugMode) print('Error updating product: $e');
+      throw Exception('Error updating product: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteProduct(String id) async {
+    http.Response response = await http.delete(Uri.parse(url + '/' + id));
+    if (kDebugMode) {
+      print(response.body);
+    }
+  }
 }
