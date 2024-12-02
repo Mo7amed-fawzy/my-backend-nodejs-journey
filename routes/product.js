@@ -18,7 +18,7 @@ router.get('/', async (req, response) => { // دي اسمها promis شبه ال
     // productModelOBJ.find().then((data) => { response.json(data) })// الطريقه دي زي future فمش احسن حاجه
     try {
         const product = await productModelOBJ.find();
-        response.json(product);
+        response.status(200).json(product);
     } catch (err) {
         console.log(err);
     }

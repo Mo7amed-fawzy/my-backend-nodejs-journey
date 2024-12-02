@@ -5,7 +5,7 @@ abstract class ProductRepo {
   // وهنا الفنكشن دي مش هحطلها body الهي الاقواس دي {}
   // ولما ارث من الكلاس دي فنا لازم اعمل override
 
-  Future<List>? getAllProducts();
+  Future<List<dynamic>>? getAllProducts();
 
   //post
   Future<void> addProduct();
