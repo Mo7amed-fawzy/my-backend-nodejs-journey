@@ -17,12 +17,12 @@ const cors = require('cors');
 // allow access middle ware
 expressOBJ.use(cors());
 
-const uri = 'mongodb+srv://mohamed:wbalYaBKMm2iqvku@cluster0.i0vlj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const uri = DB_KEY;
 
 // علشان اربط بقاعدة البيانات محتاج اعمل فنكشن الكونكت
 const connectDB = async () => {
     try {
-        await mongoose.connect(uri);
+        await mongoose.connect(process.env.uri);
         console.log('Connected to MongoDB successfully');
     } catch (err) {
         console.error('Failed to connect to MongoDB:', err);

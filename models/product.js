@@ -9,7 +9,7 @@ const productModel = mongoose.Schema({
         type: String,
         required: true
     },
-    color: {
+    image: {
         type: String,
         required: true
     }

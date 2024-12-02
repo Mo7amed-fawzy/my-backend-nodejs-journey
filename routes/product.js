@@ -48,7 +48,7 @@ router.patch('/:productId', async (req, response) => {
         const updateFields = {
             title: req.body.title,
             desc: req.body.desc,
-            color: req.body.color
+            image: req.body.image
         };
 
         const product = await productModelOBJ.updateOne(
@@ -79,7 +79,7 @@ router.post('/', (req, res) => { // النت هتبعتو فالبودي هرج�
     const product = new productModelOBJ({
         title: req.body.title,
         desc: req.body.desc,
-        color: req.body.color,
+        image: req.body.image,
     });
     product.save().then((data) => {
         res.json({ "message": "product created successfully", "data": data });
