@@ -1,20 +1,79 @@
-import 'package:group_chat_app/utiles.dart';
-
-// ignore: library_prefixes
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:flutter/material.dart';
+// import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() async {
-  Map<String, dynamic> options = {
-    'transports': ['websocket'],
-    'autoConnect': false, // فولس يعني الاتصال مش بيبدا تلقائيًا
-  };
+  runApp(const MyApp());
+}
 
-  IO.Socket socket = IO.io('http://192.168.1.3:8080/', options);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  socket.connect();
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: ChateScreen(),
+      ),
+    );
+  }
+}
 
-  socket.onConnect((data) => printHere('connected!'));
-  socket.on('event', (data) => printHere(data));
-  socket.emit('msg', {'msg': 'helloWorld'});
-  socket.onDisconnect((_) => printHere('disconnect'));
+class ChateScreen extends StatefulWidget {
+  const ChateScreen({super.key});
+
+  @override
+  State<ChateScreen> createState() => _ChateScreenState();
+}
+
+class _ChateScreenState extends State<ChateScreen> {
+  List<String> msgs = [];
+  TextEditingController? msg;
+
+  @override
+  void initState() {
+    super.initState();
+    msg = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    msg!.dispose();
+    super
+        .dispose(); // استدعاء الفنكشن الأصلية للتأكد من أن الاوبجكت بيدسبوز بشكل صحيح
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: height * 0.04),
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: width * 0.40,
+                child: ListView.builder(
+                  itemCount: msgs.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Text(
+                        msgs[index],
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

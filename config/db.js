@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 const urichat = 'mongodb://localhost:27017/MyData/GroupChat';
+const urichatpc = 'http://localhost:8080/';
 const envvar = process.env.DB_KEY
 
 // علشان اربط بقاعدة البيانات محتاج اعمل فنكشن الكونكت
 const connectDB = async () => {
     try {
-        const uri = envvar || urichat;
+        const uri = envvar || urichatpc;
         await mongoose.connect(uri);
         console.log('Connected to MongoDB successfully');
     } catch (error) {
@@ -29,5 +30,6 @@ const startServer = async (appserver) => {
         console.error('Error starting the server:', error);
     }
 };
-
+// دا منغير مونجو http://localhost:${PORT}
+//دا ديفولت مونجو mongodb://localhost:27017/${NameOfCollection}
 module.exports = startServer;
