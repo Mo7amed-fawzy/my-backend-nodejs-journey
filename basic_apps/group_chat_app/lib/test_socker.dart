@@ -1,25 +1,24 @@
-// import 'package:group_chat_app/utiles.dart';
+import 'package:group_chat_app/utiles.dart';
+import 'package:socket_io_client/socket_io_client.dart' as socket_io;
 
-// // ignore: library_prefixes
-// import 'package:socket_io_client/socket_io_client.dart' as IO;
+void main() async {
+  socket_io.Socket socket = socket_io.io(uriMethods('http'), socketIoOptions());
 
-// void main() async {
-//   Map<String, dynamic> options = {
-//     'transports': ['websocket'],
-//     'autoConnect': false, // فولس يعني الاتصال مش بيبدا تلقائيًا
-//   };
+  socket.connect();
 
-//   IO.Socket socket = IO.io('http://localhost:8080', options);
+  // التعامل مع الاتصال بنجاح
+  socket.onConnect(
+      (_) => printHere('socket connected with the server')); // رسالة ليا هنا
 
-//   socket.connect();
+  // استقبال الرسائل من السيرفر
+  socket.on('res', (data) => printHere(data));
 
-//   socket.onConnect(
-//       (_) => printHere('socket connected with the server')); // رسالة ليا هنا
+  // إرسال بيانات إلى السيرفر
+  socket.emit('msg', {
+    'name': 'ahmed',
+    'age': 21,
+  }); // بعمل emit هناك وهنا بستقبله ف data بس انا خليتها متاخدش باراميتر _
 
-//   socket.on('res', (data) => printHere(data));
-//   socket.emit('msg', {
-//     'name': 'ahmed',
-//     'age': 21,
-//   }); // بعمل emit هناك وهنا بستقبله ف data بس انا خليتها متاخدش باراميتر _
-//   socket.onDisconnect((_) => printHere('disconnect')); // لما السيرفر يفصل
-// }
+// لما السيرفر يفصل
+  socket.onDisconnect((_) => printHere('disconnect'));
+}
